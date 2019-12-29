@@ -137,6 +137,8 @@ with open(filepath, 'w', encoding='utf-8') as csv_file:
 
 logger.info('Writing complete!')
 
+logger.info('Writing to "Youtube Scraping" googlesheets')
+ 
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 credentials = ServiceAccountCredentials.from_json_keyfile_name(f'{CURRENT_DIR}/client_secret.json', scope)
 
@@ -144,9 +146,4 @@ gc = gspread.authorize(credentials)
 wks = gc.open("Youtube scraping")
 paste_csv_to_wks(filepath, wks, 'A2')
 
-# sleep_period = SLEEP_TIME_IN_HOURS * 60 * 60
-
-# logger.info(f"Script sleeping for {SLEEP_TIME_IN_HOURS} hours")
-# time.sleep(sleep_period)
-# logger.info("Sleep period ended")
-
+logger.info('Writing to googlesheets complete!')
