@@ -30,9 +30,10 @@ logger.info(f'Logfile name {filename}')
 # Chrome browser options - Version 79.0.3945.88 (Official Build) (64-bit)
 chrome_options = Options()
 
-#chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--no-sandbox')
 #chrome_options.add_argument("--disable-gpu")
-#chrome_options.add_argument("--disable-notifications")
+chrome_options.add_argument("--disable-notifications")
+chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
 chrome_options.add_argument("--headless")
 
@@ -75,16 +76,27 @@ logger.info(f'Total number of posts {total_number_of_posts}')
 logger.info("Clicking through the comments section...")
 # Select all view comments and click them
 for x in range(total_number_of_posts):
+    logger.info("creating an action")
     actions = ActionChains(driver)
+    logger.info("Action created")
     element = all_posts[x]
+    logger.info(f"Clicked view comments in post {x}")
     actions.move_to_element(element).click().perform()
     time.sleep(3)
+    logger.info(f"Moving to next comment")
 
 logger.info("Clicking through the comments section done!")
 
-soup = BeautifulSoup(driver.page_source, 'html.parser')
+logger.info("Creating BS4 instance...")
 
-driver.quit()
+try:
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
+    driver.quit()
+except:
+    logger.error("Unexpected Error", sys.exc_info()[0])
+    exit()
+
+logger.info("Selected BS4 instance")
 
 posts = []
 
