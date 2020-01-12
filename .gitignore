@@ -134,3 +134,10 @@ dmypy.json
 
 .DS_Store
 chromedriver
+index.html
+client_secret.json
+**/csv/*
+**/logs/*
+
+!**/csv/csv.log
+!**/logs/logs
